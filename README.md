@@ -1,5 +1,5 @@
 # c2-network
-Network - plugin for Construct 2 to check internet connection based on offline.js. Current version: v0.1
+Network - plugin for Construct 2 to check internet connection. Current version: v0.1
 ## Conditions
 ![Conditions](http://dl4.joxi.net/drive/2018/03/05/0008/0341/561493/93/e4fb61f029.jpg)
 ## Expressions
