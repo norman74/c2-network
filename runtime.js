@@ -33,13 +33,6 @@ cr.plugins_.networkAddon = function(runtime)
 	var instanceProto = pluginProto.Instance.prototype;
 	instanceProto.onCreate = function()
 	{
-		var self = this;
-		Offline.on('confirmed-up', function(){
-			self.state = Offline.state;
-		}, self)
-		Offline.on('confirmed-down', function(){
-			self.state = Offline.state;
-		}, self)
 	};
 	instanceProto.onDestroy = function (){};
 	instanceProto.saveToJSON = function (){return {};};
@@ -62,7 +55,7 @@ cr.plugins_.networkAddon = function(runtime)
 	
 	Cnds.prototype.isOnline = function ()
 	{
-		if (this.state == "up")
+		if (this.state == "online")
 			return true
 	};
 	
@@ -71,6 +64,30 @@ cr.plugins_.networkAddon = function(runtime)
 	//////////////////////////////////////
 	// Actions
 	function Acts() {};
+
+	Acts.prototype.check = function ()
+	{
+		var self = this;
+		var xhr = new XMLHttpRequest();
+		var file = "https://esri.github.io/offline-editor-js/tiny-image.png";
+		var randomNum = Math.round(Math.random() * 10000);
+	 
+		xhr.open('HEAD', file + "?rand=" + randomNum, true);
+		xhr.send();
+		 
+		xhr.addEventListener("readystatechange", processRequest, false);
+	 
+		function processRequest(e) {
+		  if (xhr.readyState == 4) {
+			console.log(xhr.status);
+			if (xhr.status >= 200 && xhr.status < 304) {
+				self.state = "online";
+			} else {
+				self.state = "offline";
+			}
+		  }
+		}
+	};
 	
 	pluginProto.acts = new Acts();
 	

@@ -3,25 +3,27 @@
 	return {
 		"name":			"Network",
 		"id":			"networkAddon",
-		"version":		"0.1",
+		"version":		"0.2",
 		"description":	"This plugin allows to check user's network",
 		"author":		"Daniil Schetinskiy",
 		"help url":		"vk.com/norman74",
 		"category":		"General",
 		"type":			"object",
 		"rotatable":	true,
-		"dependency":	"offline.min.js",
 		"flags":		pf_singleglobal
 	};
 };
-
 ////////////////////////////////////////
 // Conditions
 AddCondition(0, cf_none, "Is online", "Network connection", "Is network online", "Check if network connected", "isOnline");
 
 ////////////////////////////////////////
+// Actions
+AddAction(0, af_none, "Check", "Network connection", "Check network connection", "Check the current status of the connection.", "check");
+
+////////////////////////////////////////
 // Expressions
-AddExpression(0, ef_return_number, "State", "Network connection", "state", "The current state of the connection 'up' or 'down'");
+AddExpression(0, ef_return_string, "State", "Network connection", "state", "The current state of the connection 'online' or 'offline'");
 
 ////////////////////////////////////////
 ACESDone();
