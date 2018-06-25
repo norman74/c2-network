@@ -28,7 +28,7 @@ cr.plugins_.networkAddon = function(runtime)
 	{
 		this.type = type;
 		this.runtime = type.runtime;
-		this.state = "";
+		this.state = 0;
 	};
 	var instanceProto = pluginProto.Instance.prototype;
 	instanceProto.onCreate = function()
@@ -44,7 +44,11 @@ cr.plugins_.networkAddon = function(runtime)
 		propsections.push({
 			"title": "Network",
 			"properties": [
-				{"name": "State", "value": this.state, "readonly": true}
+				{
+					"name": "State", 
+					"value": this.state, 
+					"readonly": true
+				}
 			]
 		});
 	};
@@ -55,7 +59,7 @@ cr.plugins_.networkAddon = function(runtime)
 	
 	Cnds.prototype.isOnline = function ()
 	{
-		if (this.state == "online")
+		if (this.state == 1)
 			return true
 	};
 	
@@ -78,14 +82,15 @@ cr.plugins_.networkAddon = function(runtime)
 		xhr.addEventListener("readystatechange", processRequest, false);
 	 
 		function processRequest(e) {
-		  if (xhr.readyState == 4) {
-			console.log(xhr.status);
-			if (xhr.status >= 200 && xhr.status < 304) {
-				self.state = "online";
+			if (xhr.readyState == 4) {
+				if (xhr.status >= 200 && xhr.status < 304) {
+					self.state = 1;
+				} else {
+					self.state = 0;
+				}
 			} else {
-				self.state = "offline";
+				self.state = 0;
 			}
-		  }
 		}
 	};
 	
@@ -97,7 +102,7 @@ cr.plugins_.networkAddon = function(runtime)
 	
 	Exps.prototype.state = function (ret)
 	{
-		ret.set_string(this.state);
+		ret.set_int(this.state);
 	};
 	
 	pluginProto.exps = new Exps();

@@ -3,8 +3,8 @@
 	return {
 		"name":			"Network",
 		"id":			"networkAddon",
-		"version":		"0.2",
-		"description":	"This plugin allows to check user's network",
+		"version":		"1.0",
+		"description":	"This plugin allows to check user's network state",
 		"author":		"Daniil Schetinskiy",
 		"help url":		"vk.com/norman74",
 		"category":		"General",
@@ -23,7 +23,7 @@ AddAction(0, af_none, "Check", "Network connection", "Check network connection",
 
 ////////////////////////////////////////
 // Expressions
-AddExpression(0, ef_return_string, "State", "Network connection", "state", "The current state of the connection 'online' or 'offline'");
+AddExpression(0, ef_return_number, "State", "Network connection", "state", "The current state of the connection '0' (offline) or '1' (online)");
 
 ////////////////////////////////////////
 ACESDone();
